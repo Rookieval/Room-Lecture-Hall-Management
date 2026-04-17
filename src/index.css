@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1A365D;
+  --color-accent: #D69E2E;
+  --color-bg-light: #F7FAFC;
+  --color-text-main: #2D3748;
+  --color-text-muted: #718096;
+  --color-fixed-blue: #3182CE;
+  --color-multi-green: #38A169;
+  --color-exc-yellow: #D69E2E;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", var(--font-sans);
+}
+
+@layer base {
+  body {
+    @apply bg-bg-light text-text-main font-sans;
+  }
+}
+
+/* Print styles for PDF export */
+@media print {
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* Hide the sidebar and header */
+  aside,
+  header,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print\\:block {
+    display: block !important;
+  }
+
+  /* Make the main content fill the page */
+  main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .flex.h-screen {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .overflow-y-auto {
+    overflow: visible !important;
+  }
+
+  .print-area {
+    max-width: 100% !important;
+  }
+
+  /* Clean up borders and shadows for print */
+  .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
+    box-shadow: none !important;
+  }
+
+  .rounded-3xl, .rounded-\\[2\\.5rem\\] {
+    border-radius: 0 !important;
+  }
+}

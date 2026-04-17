@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile containing identity and role information.",
+      "type": "object",
+      "properties": {
+        "employeeID": { "type": "string", "description": "Unique identifier for the employee/manager." },
+        "name": { "type": "string", "description": "Full name of the user." },
+        "role": { "type": "string", "enum": ["Admin", "BranchManager", "Employee", "Secretary"], "description": "Access level within the system." },
+        "isApproved": { "type": "boolean", "description": "Approval state by an administrator." },
+        "email": { "type": "string", "format": "email", "description": "Associated email address." }
+      },
+      "required": ["employeeID", "name", "role", "isApproved", "email"]
+    },
+    "room": {
+      "title": "Room",
+      "description": "Information about a physical room available for booking.",
+      "type": "object",
+      "properties": {
+        "roomID": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["Lecture Room", "Multi-Purpose"] },
+        "capacity": { "type": "number" },
+        "location": { "type": "string" }
+      },
+      "required": ["roomID", "name", "type", "capacity", "location"]
+    },
+    "booking": {
+      "title": "Booking",
+      "description": "A reservation request for a specific room and time slot.",
+      "type": "object",
+      "properties": {
+        "eventTitle": { "type": "string" },
+        "expectedAttendance": { "type": "number" },
+        "type": { "type": "string" },
+        "roomID": { "type": "string" },
+        "slot": { "type": "string" },
+        "userID": { "type": "string" },
+        "userName": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Pending", "AdminApproved", "Rejected", "FinalApproved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["eventTitle", "roomID", "userID", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "Collection of system user profiles."
+    },
+    "/rooms/{roomId}": {
+      "schema": "room",
+      "description": "Inventory of campus rooms."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "booking",
+      "description": "History and queue of room reservation requests."
+    }
+  }
+}

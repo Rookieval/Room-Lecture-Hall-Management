@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: employeeID
+    // Fields:
+    //   - employeeID: string (required)
+    //   - name: string (required)
+    //   - role: string (Admin, BranchManager, Employee, Secretary)
+    //   - isApproved: bool
+    //   - email: string
+    //
+    // Collection: bookings
+    // Document ID: uuid
+    // Fields:
+    //   - eventTitle: string
+    //   - expectedAttendance: number
+    //   - type: string (Lecture Room, Multi-Purpose)
+    //   - roomID: string
+    //   - slot: string
+    //   - userID: string
+    //   - date: string (YYYY-MM-DD)
+    //   - status: string (Pending, AdminApproved, Rejected, FinalApproved)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function userExists() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        (userExists() && getUserData().role == 'Admin') || 
+        request.auth.token.email == '8888@aastmt.edu'
+      );
+    }
+
+    function isBranchManager() {
+      return isAuthenticated() && (
+        (userExists() && getUserData().role == 'BranchManager') ||
+        request.auth.token.email == '7777@aastmt.edu'
+      );
+    }
+
+    function isApproved() {
+      return isAuthenticated() && userExists() && getUserData().isApproved == true;
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // Rules
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (request.auth.uid == userId);
+      allow update: if isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if isAuthenticated();
+      allow create: if isApproved();
+      allow update: if isAdmin() || isBranchManager() || (isApproved() && resource.data.userID == request.auth.uid && resource.data.status == 'Pending');
+      allow delete: if isAdmin();
+    }
+
+    match /rooms/{roomId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /config/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /overrides/{employeeID} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+  }
+}

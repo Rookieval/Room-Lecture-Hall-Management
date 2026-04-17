@@ -1,0 +1,127 @@
+{
+  "users": [
+    {
+      "id": "admin-7777",
+      "employeeID": "7777",
+      "name": "Super Admin",
+      "role": "Admin",
+      "isApproved": true,
+      "email": "7777@aastmt.edu",
+      "password": "123456"
+    },
+    {
+      "id": "manager-8888",
+      "employeeID": "8888",
+      "name": "Branch Manager",
+      "role": "BranchManager",
+      "isApproved": true,
+      "email": "8888@aastmt.edu",
+      "password": "123456"
+    },
+    {
+      "id": "mo365xny23ksco",
+      "employeeID": "9999",
+      "name": "mariam",
+      "email": "facult@aastmt.edu",
+      "password": "567890",
+      "role": "Employee",
+      "isApproved": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": "101",
+      "roomID": "101",
+      "name": "Hall 101",
+      "type": "Lecture Room",
+      "capacity": 120,
+      "location": "Building A, 1st Floor"
+    },
+    {
+      "id": "401",
+      "roomID": "401",
+      "name": "Hall 401",
+      "type": "Lecture Room",
+      "capacity": 150,
+      "location": "Building B, 4th Floor"
+    },
+    {
+      "id": "MP-01",
+      "roomID": "MP-01",
+      "name": "Grand Foyer",
+      "type": "Multi-Purpose",
+      "capacity": 300,
+      "location": "Main Building"
+    },
+    {
+      "id": "MP-02",
+      "roomID": "MP-02",
+      "name": "Conference Suite 1",
+      "type": "Multi-Purpose",
+      "capacity": 50,
+      "location": "Building C"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "mo3677ik0od4jg",
+      "eventTitle": "testing lalala",
+      "expectedAttendance": 40,
+      "type": "Lecture Room",
+      "date": "2026-04-19",
+      "slot": "Slot 1 (08:30 - 10:30)",
+      "justification": "",
+      "needs": {
+        "microphones": 0,
+        "laptops": false,
+        "videoConf": false
+      },
+      "userID": "9999",
+      "userName": "mariam",
+      "status": "FinalApproved",
+      "createdAt": "2026-04-17T17:16:38.732Z",
+      "lastModifiedBy": "8888",
+      "assignedRoom": "101"
+    }
+  ],
+  "delegations": [],
+  "notifications": [
+    {
+      "id": "mo36ixfvm4vbsi",
+      "targetUserID": "9999",
+      "type": "approved",
+      "title": "Booking Approved: testing lalala",
+      "message": "Your request for \"testing lalala\" on 2026-04-19 has been approved. Room: 101",
+      "read": false,
+      "createdAt": "2026-04-17T17:25:45.547Z"
+    }
+  ],
+  "settings": {
+    "slots": [
+      {
+        "id": "slot-1",
+        "label": "Slot 1",
+        "start": "08:30",
+        "end": "10:30"
+      },
+      {
+        "id": "slot-2",
+        "label": "Slot 2",
+        "start": "10:45",
+        "end": "12:45"
+      },
+      {
+        "id": "slot-3",
+        "label": "Slot 3",
+        "start": "13:45",
+        "end": "15:45"
+      },
+      {
+        "id": "slot-4",
+        "label": "Slot 4",
+        "start": "16:00",
+        "end": "18:00"
+      }
+    ]
+  }
+}

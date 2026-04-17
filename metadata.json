@@ -1,0 +1,6 @@
+{
+  "name": "AASTMT Room Management System",
+  "description": "A comprehensive room booking and management system for AASTMT facilities, featuring role-based workflows and multi-stage approvals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
